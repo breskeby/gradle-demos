@@ -1,0 +1,15 @@
+apply plugin:'java'
+
+version = '0.9-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2.1'
+}
+
+task all(type:Zip){
+	from "readme.xml"
+}

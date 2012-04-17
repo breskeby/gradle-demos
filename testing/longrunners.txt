@@ -1,0 +1,9 @@
+org.gradle.tests0.Test11
+org.gradle.tests0.Test10
+org.gradle.tests0.Test0
+org.gradle.tests0.Test1
+org.gradle.tests10.Test3
+org.gradle.tests11.Test12
+org.gradle.tests27.Test4
+org.gradle.tests38.Test12
+org.gradle.tests6.Test14
