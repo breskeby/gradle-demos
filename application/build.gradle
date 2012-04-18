@@ -1,5 +1,4 @@
 apply plugin:'java'
-
 version = '0.9-SNAPSHOT'
 
 repositories {
@@ -8,4 +7,14 @@ repositories {
 
 dependencies {
     compile 'commons-collections:commons-collections:3.2.1'
+}
+
+
+task createDocs {
+    def docs = file("$buildDir/docs")
+    outputs.dir docs
+    doLast {
+        docs.mkdirs()
+        new File(docs, "readme.txt").write("Read me!")
+    }
 }
