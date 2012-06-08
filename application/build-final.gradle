@@ -2,6 +2,13 @@ apply plugin:'java'
 apply plugin:'application'
 version = '1.0-SNAPSHOT'
 
+repositories {
+    //maven {
+    //    url "http://localhost:8081/artifactory/repo1"
+    //}
+    mavenCentral()
+}
+
 task createDocs {
     def docs = file("$buildDir/docs")
     outputs.dir docs
@@ -14,3 +21,4 @@ task createDocs {
 applicationDistribution.from(createDocs) {
     into "docs"
 }
+

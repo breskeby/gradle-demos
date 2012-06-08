@@ -1,12 +1,11 @@
-import groovy.text.SimpleTemplateEngine
-import groovy.text.Template
-import groovy.text.TemplateEngine
-
+apply from:'gradle/createTests.gradle'
 apply plugin: 'groovy'
-
 version = '1.0'
 
 repositories {
+    //maven {
+    //    url "http://localhost:8081/artifactory/repo1"
+    //}
     mavenCentral()
 }
 
@@ -49,39 +48,6 @@ test {
     afterSuite { descr, result ->
         if (!descr.parent) {
             file("$buildDir/longrunners").text = longRunners.join('\n')
-        }
-    }
-}
-
-class CreateTests extends DefaultTask {
-    @InputFile
-    File template
-
-    @Input
-    int packages
-
-    @Input
-    int tests
-
-    @OutputDirectory
-    File out = new File("src/test/groovy")
-
-    @TaskAction
-    def create() {
-        project.delete out
-        def engine = new SimpleTemplateEngine()
-        packages.times { packageCounter ->
-            String packageName = "org.gradle.tests$packageCounter"
-            def path = project.mkdir("" + out + "/" + packageName.replace(".", "/"))
-            tests.times { testCounter ->
-                def testName = "Test$testCounter"
-                def binding = [
-                        packageName: packageName,
-                        testName: testName,
-                        sleep: 5
-                ]
-                project.file("$path/${testName}.groovy").text = engine.createTemplate(template).make(binding).toString()
-            }
         }
     }
 }

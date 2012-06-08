@@ -1,33 +1,13 @@
 apply plugin: 'groovy'
+apply from:'gradle/createTests.gradle'
+
 version = '1.0-SNAPSHOT'
 
 repositories {
-    maven {
-        url "http://localhost:8081/artifactory/repo1"
-    }
-}
-
-test{
-	maxParallelForks = 4
-	def longRunner = []
-	
-	afterTest{descr, result ->
-		if(result.endTime - result.startTime > 100){
-			logger.warn ("Der Test ${descr.className} dauert zu lange!")
-			longRunner << descr.className
-		}
-	}
-	
-	afterSuite{ descr, result ->
-		if(!descr.parent){
-			file("$buildDir/longrunner.txt").text = longRunner.join("\n")
-			"mate $buildDir/longrunner.txt".execute()
-		}
-	}
-	
-	if(longRunner){
-		throw new GradleException("Zu langsame Tests vorhanden")
-	}
+    //maven {
+    //    url "http://localhost:8081/artifactory/repo1"
+    //}
+    mavenCentral()
 }
 
 dependencies {
@@ -36,79 +16,4 @@ dependencies {
 	testCompile "org.spockframework:spock-core:0.6-groovy-1.7"
     testCompile group: 'junit', name: 'junit', version: '4.7' 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import groovy.text.SimpleTemplateEngine
-import groovy.text.Template
-import groovy.text.TemplateEngine
-
-
-task createTests(type: CreateTests) {
-    template = file("src/templates/test.groovy")
-    packages = 50
-    tests = 20
-}
-
-
-
-
-class CreateTests extends DefaultTask {
-    @InputFile
-    File template
-
-    @Input
-    int packages
-
-    @Input
-    int tests
-
-    @OutputDirectory
-    File out = new File("src/test/groovy")
-
-    @TaskAction
-    def create() {
-        project.delete out
-        def engine = new SimpleTemplateEngine()
-        packages.times { packageCounter ->
-            String packageName = "org.gradle.tests$packageCounter"
-            def path = project.mkdir("" + out + "/" + packageName.replace(".", "/"))
-
-			tests.times { testCounter ->
-                def testName = "Test$testCounter"
-				//generate random sleep
-				
-				Random r = new Random();
-	            int number = r.nextInt();
-				int random_number = number % 99;
-				if (random_number < 1) random_number = random_number + 99;
-				
-				def binding = [
-                        packageName: packageName,
-                        testName: testName,
-                        sleep: random_number
-                ]
-                project.file("$path/${testName}.groovy").text = engine.createTemplate(template).make(binding).toString()
-            }
-        }
-    }
-}
-
 

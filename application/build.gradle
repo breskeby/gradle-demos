@@ -1,5 +1,10 @@
 apply plugin:'java'
+apply plugin:'application'
+apply plugin:'eclipse'
+
 version = '0.9-SNAPSHOT'
+
+mainClassName = "org.gradle.sample.Main"
 
 repositories {
     mavenCentral()
@@ -7,14 +12,22 @@ repositories {
 
 dependencies {
     compile 'commons-collections:commons-collections:3.2.1'
+    compile 'org.slf4j:slf4j-api:1.5.4'
+	runtime 'org.slf4j:slf4j-log4j12:1.0.1'
+	runtime 'log4j:log4j:1.2.16'
 }
 
+task createDocs(type:CreateDocs) {
+	docs = file("$buildDir/docs")
+}
 
-task createDocs {
-    def docs = file("$buildDir/docs")
-    outputs.dir docs
-    doLast {
-        docs.mkdirs()
+class CreateDocs extends DefaultTask{
+	def docs
+	@TaskAction public void exec(){
+		outputs.dir docs
+    	docs.mkdirs()
         new File(docs, "readme.txt").write("Read me!")
-    }
+	}
 }
+
+applicationDistribution.from(createDocs)
