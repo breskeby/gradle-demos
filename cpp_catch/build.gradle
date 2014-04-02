@@ -18,13 +18,13 @@ sources {
 
 task runMainTests(type:Exec){
 	dependsOn 'testExecutable'
-	ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
-
-	commandLine "build/binaries/testExecutable/test"
+	
+	commandLine "$buildDir/binaries/testExecutable/test"
 	args "-r", "junit" //generate junit like output
-	//grab the output 
-	standardOutput outputStream
 	ignoreExitValue = true
+	
+	ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
+	standardOutput outputStream
 	
 	doLast{
 		//  write output to a file
