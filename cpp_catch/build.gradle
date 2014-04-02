@@ -1,0 +1,40 @@
+apply plugin:'cpp'
+
+libraries {
+    main {}
+}
+
+executables{
+	test {}
+}
+
+sources {
+	test {
+		cpp {
+			lib libraries.main.static
+		}
+    }
+}
+
+task runMainTests(type:Exec){
+	dependsOn 'testExecutable'
+	ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
+
+	commandLine "build/binaries/testExecutable/test"
+	args "-r", "junit" //generate junit like output
+	//grab the output 
+	standardOutput outputStream
+	ignoreExitValue = true
+	
+	doLast{
+		//  write output to a file
+		File testResultXml = project.file("$buildDir/reports/test/testResult.xml")
+		testResultXml.parentFile.mkdirs()
+		testResultXml.text = new String(outputStream.toByteArray())
+
+		// verify test result and
+		if(execResult.exitValue!=0){
+			throw new GradleException("Catch tests have failed. See test report at ${testResultXml.toURI()} for details.")
+		}		
+	}
+}

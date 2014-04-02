@@ -1,0 +1,90 @@
+<Catch name="test">
+  <Group>
+    <TestCase name="Factorials are computed">
+      <OverallResult success="true"/>
+    </TestCase>
+    <TestCase name="vectors can be sized and resized">
+      <Section name="resizing bigger changes size and capacity">
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="resizing smaller changes size but not capacity">
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="reserving bigger changes capacity but not size">
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="reserving smaller does not change size or capacity">
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <OverallResult success="true"/>
+    </TestCase>
+    <TestCase name="Scenario: vectors can be sized and resized">
+      <Section name="Given: A vector with some items">
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: the size is increased">
+          <OverallResults successes="0" failures="0"/>
+        </Section>
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: the size is increased">
+          <Section name="Then: the size and capacity change">
+            <OverallResults successes="2" failures="0"/>
+          </Section>
+          <OverallResults successes="2" failures="0"/>
+        </Section>
+        <OverallResults successes="4" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: the size is reduced">
+          <OverallResults successes="0" failures="0"/>
+        </Section>
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: the size is reduced">
+          <Section name="Then: the size changes but not capacity">
+            <OverallResults successes="2" failures="0"/>
+          </Section>
+          <OverallResults successes="2" failures="0"/>
+        </Section>
+        <OverallResults successes="4" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: more capacity is reserved">
+          <OverallResults successes="0" failures="0"/>
+        </Section>
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: more capacity is reserved">
+          <Section name="Then: the capacity changes but not the size">
+            <OverallResults successes="2" failures="0"/>
+          </Section>
+          <OverallResults successes="2" failures="0"/>
+        </Section>
+        <OverallResults successes="4" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: less capacity is reserved">
+          <OverallResults successes="0" failures="0"/>
+        </Section>
+        <OverallResults successes="2" failures="0"/>
+      </Section>
+      <Section name="Given: A vector with some items">
+        <Section name="When: less capacity is reserved">
+          <Section name="Then: neither size nor capacity are changed">
+            <OverallResults successes="2" failures="0"/>
+          </Section>
+          <OverallResults successes="2" failures="0"/>
+        </Section>
+        <OverallResults successes="4" failures="0"/>
+      </Section>
+      <OverallResult success="true"/>
+    </TestCase>
+    <OverallResults successes="48" failures="0"/>
+  </Group>
+  <OverallResults successes="48" failures="0"/>
+</Catch>
