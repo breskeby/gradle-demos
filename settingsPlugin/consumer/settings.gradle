@@ -1,0 +1,7 @@
+buildscript{
+	dependencies{
+		classpath files("../plugin/build/libs/plugin.jar")
+	}
+}
+
+apply plugin:'samplesettingsplugin'
